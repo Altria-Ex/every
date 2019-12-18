@@ -128,9 +128,6 @@ def read_html(path):
         with open(path, 'r', encoding='utf-8') as htmlfile:
             htmlhandle = htmlfile.read()
             soup = BeautifulSoup(htmlhandle, features='lxml')
-            tags = soup.findAll()
-            for tag in tags:
-                t = tag.text.strip()
-                if t:
-                    text.append(t)
+            [s.extract() for s in soup(['script', 'style'])]
+            text = soup.text.split()
     return text
